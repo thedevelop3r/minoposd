@@ -523,7 +523,7 @@ void panSetup()
             osd.printf("||amp per volt:    %5i", curr_amp_per_volt);
             curr_amp_per_volt = change_int_val(curr_amp_per_volt, curr_amp_per_volt_ADDR, delta);
             break;
-#endif /* ifdef FLIGHT_BATT_ON_MINIMOSD */
+#endif // ifdef FLIGHT_BATT_ON_MINIMOSD
         }
         osd.closePanel();
     }
@@ -877,7 +877,7 @@ void panFlightMode(int first_col, int first_line)
     } else if (osd_mode == 12) {
         mode_str = "poi"; // POI
     }
-#endif /* if defined VERSION_RELEASE_12_10_1 || defined VERSION_RELEASE_12_10_2 || defined VERSION_RELEASE_13_06_1 || defined VERSION_RELEASE_13_06_2 || defined VERSION_RELEASE_14_01_1 */
+#endif // if defined VERSION_RELEASE_12_10_1 || defined VERSION_RELEASE_12_10_2 || defined VERSION_RELEASE_13_06_1 || defined VERSION_RELEASE_13_06_2 || defined VERSION_RELEASE_14_01_1
 #if defined VERSION_RELEASE_14_06_1 || defined VERSION_RELEASE_14_10_1
     if (osd_mode == 0) {
         mode_str = "man"; // MANUAL
@@ -914,7 +914,7 @@ void panFlightMode(int first_col, int first_line)
     } else if (osd_mode == 16) {
         mode_str = "ac "; // AUTOCRUISE
     }
-#endif /* if defined VERSION_RELEASE_14_06_1 || defined VERSION_RELEASE_14_10_1 */
+#endif // if defined VERSION_RELEASE_14_06_1 || defined VERSION_RELEASE_14_10_1
 #if defined VERSION_RELEASE_15_01_1 || defined VERSION_RELEASE_15_02_1
     if (osd_mode == 0) {
         mode_str = "man"; // MANUAL
@@ -951,8 +951,8 @@ void panFlightMode(int first_col, int first_line)
     } else if (osd_mode == 16) {
         mode_str = "ac "; // AUTOCRUISE
     }
-#endif /* if defined VERSION_RELEASE_15_01_1 || defined VERSION_RELEASE_15_02_1 */
-#if defined VERSION_RELEASE_15_05
+#endif // if defined VERSION_RELEASE_15_01_1 || defined VERSION_RELEASE_15_02_1
+#if defined VERSION_RELEASE_15_05 || defined VERSION_RELEASE_LP15_09
     if (osd_mode == 0) {
         mode_str = "man"; // MANUAL
     } else if (osd_mode == 1) {
@@ -976,7 +976,7 @@ void panFlightMode(int first_col, int first_line)
     } else if (osd_mode == 10) {
         mode_str = "hl "; // HOMELEASH
     } else if (osd_mode == 11) {
-        mode_str = "pa "; // ABSOLUTEPOSITION
+        mode_str = "ap "; // ABSOLUTEPOSITION
     } else if (osd_mode == 12) {
         mode_str = "rtb"; // RETURNTOBASE
     } else if (osd_mode == 13) {
@@ -990,7 +990,7 @@ void panFlightMode(int first_col, int first_line)
     } else if (osd_mode == 17) {
         mode_str = "at "; // AUTOTAKEOFF
     }
-#endif /* if defined VERSION_RELEASE_15_05 */
+#endif // if defined VERSION_RELEASE_15_05 || defined VERSION_RELEASE_LP15_09
     osd.printf("%c%s", 0xE0, mode_str);
     osd.closePanel();
 }
@@ -1177,7 +1177,7 @@ void panUAVPosition(int center_col, int center_line)
     osd.printf_P(PSTR("\xF5\xF6"));
     osd.closePanel();
 }
-#endif /* ifdef SHOW_RADAR */
+#endif // ifdef SHOW_RADAR
 
 
 #if 0
@@ -1237,7 +1237,7 @@ void panOtherUAV(int first_col, int first_line)
     showArrow((uint8_t)oUAV_direction);
     osd.closePanel();
 }
-#endif /* if 0 */
+#endif // if 0
 
 
 /******* HELPER FUNCTIONS *******/

@@ -183,7 +183,7 @@ void writeSettings()
         writeEEPROM(6, ch_toggle_ADDR);
     }
 }
-#endif /* if 0 */
+#endif // if 0
 
 
 void readSettings()

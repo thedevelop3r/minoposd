@@ -141,7 +141,7 @@ void uavtalk_show_msg(uint8_t y, uavtalk_message_t *msg)
 
     osd.closePanel();
 }
-#endif /* ifdef DEBUG */
+#endif // ifdef DEBUG
 
 
 static inline int8_t uavtalk_get_int8(uavtalk_message_t *msg, int pos)
@@ -484,6 +484,7 @@ int uavtalk_read(void)
 #ifdef VERSION_ADDITIONAL_UAVOBJID
             case MANUALCONTROLCOMMAND_OBJID_001:
             case MANUALCONTROLCOMMAND_OBJID_002:
+            case MANUALCONTROLCOMMAND_OBJID_003:
 #endif
                 osd_throttle = (int16_t)(100.0 * uavtalk_get_float(&msg, MANUALCONTROLCOMMAND_OBJ_THROTTLE));
                 if (osd_throttle < 0 || osd_throttle > 200) {

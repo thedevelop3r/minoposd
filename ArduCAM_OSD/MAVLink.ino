@@ -161,4 +161,4 @@ void read_mavlink()
     packet_drops += status.packet_rx_drop_count;
     parse_error  += status.parse_error;
 }
-#endif /* ifndef PROTOCOL_UAVTALK */
+#endif // ifndef PROTOCOL_UAVTALK

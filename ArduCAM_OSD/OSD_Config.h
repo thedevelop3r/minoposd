@@ -63,11 +63,12 @@
 // #define VERSION_RELEASE_14_06_1		// OpenPilot-RELEASE 14.06.1	'Peanuts Schnapps' .1
 // #define VERSION_RELEASE_14_10_1		// OpenPilot-RELEASE 14.10.1	'Mini Me' .1
 // #define VERSION_RELEASE_15_01_1		// OpenPilot-RELEASE 15.01.1	'Look, Ma... No Hands!' .1
-// #define VERSION_RELEASE_15_02_1		// OpenPilot-RELEASE 15.02.1	'not out yet' .1
-#define VERSION_RELEASE_15_05
+// #define VERSION_RELEASE_15_02_1		// OpenPilot-RELEASE 15.02.1	'Rajin Cajun' .1
+// #define VERSION_RELEASE_15_05
+#define VERSION_RELEASE_LP15_09 // First LibrePilot  release     '15.09 Supermoon eclipse'
 
 // Version string
-#define VERSION_STRING osd.printf_P(PSTR("minoposd op-1904"));
+#define VERSION_STRING          osd.printf_P(PSTR("minoposd librepilot"));
 
 // OpenPilot additional UAVObjIds for unreleased and released versions
 #define VERSION_ADDITIONAL_UAVOBJID

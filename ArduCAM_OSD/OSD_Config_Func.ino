@@ -213,6 +213,7 @@ void readSettings()
     volt_div_ratio    = EEPROM.read(volt_div_ratio_ADDR) + (EEPROM.read(volt_div_ratio_ADDR + 1) << 8);
     curr_amp_per_volt = EEPROM.read(curr_amp_per_volt_ADDR) + (EEPROM.read(curr_amp_per_volt_ADDR + 1) << 8);
     curr_amp_offset   = EEPROM.read(curr_amp_offset_ADDR) + (EEPROM.read(curr_amp_offset_ADDR + 1) << 8);
+    osd_temp_mode     = EEPROM.read(temp_mode_ADDR);
 }
 
 void readPanelSettings()

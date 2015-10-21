@@ -501,6 +501,7 @@ void panSetup()
                     osd_temp_mode = 1;
                 }
             }
+            EEPROM.write(temp_mode_ADDR, osd_temp_mode);
             break;
         case 3:
             osd.printf_P(PSTR("battery warning "));

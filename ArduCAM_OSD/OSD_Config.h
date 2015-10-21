@@ -292,5 +292,6 @@
 #define curr_amp_per_volt_ADDR    1014
 #define curr_amp_offset_ADDR      1016
 
+#define temp_mode_ADDR            1019
 
 #define EEPROM_MAX_ADDR           1024 // this is 328 chip

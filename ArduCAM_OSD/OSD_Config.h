@@ -18,6 +18,9 @@
 // JRChange: Flight Batt on MinimOSD:
 // #define FLIGHT_BATT_ON_MINIMOSD
 
+// Add MicroOSD KV team mod
+// #define MICRO_OSD_KVTEAM
+
 // JRChange: Flight Batt on Revo:
 #define FLIGHT_BATT_ON_REVO
 

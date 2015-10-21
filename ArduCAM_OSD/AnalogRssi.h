@@ -31,9 +31,17 @@
 #ifndef ANALOG_RSSI_H_
 #define ANALOG_RSSI_H_
 
-#define RSSI_PIN    1                       // A1 is pin 24
-                                            // Any 'free' analog input will do -- A0-5 are available,
-                                            // which are pins 23-28 on the ATmega328p
+#if defined MICRO_OSD_KVTEAM
+
+#define RSSI_PIN 3 // A3 is pin 26
+                   // for Micro OSD KV team
+#else
+
+#define RSSI_PIN 1 // A1 is pin 24
+                   // Any 'free' analog input will do -- A0-5 are available,
+                   // which are pins 23-28 on the ATmega328p
+
+#endif
 
 #define REF_VOLTAGE 1.1 // INTERNAL: a built-in reference, equal to 1.1 volts on the ATmega168 or ATmega328
 

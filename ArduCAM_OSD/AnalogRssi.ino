@@ -4,7 +4,7 @@
  * @file       AnalogRssi.ino
  * @author     Philippe Vanhaesnedonck
  * @brief      Implements RSSI report on the Ardupilot Mega MinimOSD
- * 	       using built-in ADC reference.
+ *             using built-in ADC reference.
  * @see        The GNU Public License (GPL) Version 3
  *
  *****************************************************************************/
@@ -20,7 +20,7 @@
  * for more details.
  *
  * You should have received a copy of the GNU General Public License along
- * with this program; if not, see <http://www.gnu.org/licenses/> or write to the 
+ * with this program; if not, see <http://www.gnu.org/licenses/> or write to the
  * Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
@@ -33,23 +33,22 @@
 
 void analog_rssi_init(void)
 {
-	analogReference(INTERNAL);			// INTERNAL: a built-in reference, equal to 1.1 volts on the ATmega168 or ATmega328
+    analogReference(INTERNAL); // INTERNAL: a built-in reference, equal to 1.1 volts on the ATmega168 or ATmega328
 }
 
 
 void analog_rssi_read(void)
 {
-	if (rssiraw_on) {
-		osd_rssi = analogRead(RSSI_PIN) / 4;				// Just raw value, 0-255. We use this range to better align
-										// with the original code.
-	} else {
+    if (rssiraw_on) {
+        osd_rssi = analogRead(RSSI_PIN) / 4; // Just raw value, 0-255. We use this range to better align
+                                             // with the original code.
+    } else {
 #ifdef JR_SPECIALS
 // SEARCH GLITCH
-		osd_rssi = analogRead(RSSI_PIN)       / 4;			// 1:1 input
+        osd_rssi = analogRead(RSSI_PIN) / 4; // 1:1 input
 #else
-		osd_rssi = analogRead(RSSI_PIN) * .2  / 4 + osd_rssi * .8;	// Smooth input
+        osd_rssi = analogRead(RSSI_PIN) * .2 / 4 + osd_rssi * .8; // Smooth input
 #endif
-		osd_rssi = constrain(osd_rssi, rssipersent, rssical);		// Ensure we stay in range
-	}
+        osd_rssi = constrain(osd_rssi, rssipersent, rssical); // Ensure we stay in range
+    }
 }
-

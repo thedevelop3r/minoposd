@@ -1,54 +1,56 @@
 /*
 
-Copyright (c) 2011.  All rights reserved.
-An Open Source Arduino based OSD and Camera Control project.
+   Copyright (c) 2011.  All rights reserved.
+   An Open Source Arduino based OSD and Camera Control project.
 
-Program  : ArduCAM-OSD (Supports the variant: minimOSD)
-Version  : V1.9, 14 February 2012
-Author(s): Sandro Benigno
-Coauthor(s):
-Jani Hirvinen   (All the EEPROM routines)
-Michael Oborne  (OSD Configutator)
-Mike Smith      (BetterStream and Fast Serial libraries)
-Special Contribuitor:
-Andrew Tridgell by all the support on MAVLink
-Doug Weibel by his great orientation since the start of this project
-Contributors: James Goppert, Max Levine
-and all other members of DIY Drones Dev team
-Thanks to: Chris Anderson, Jordi Munoz
+   Program  : ArduCAM-OSD (Supports the variant: minimOSD)
+   Version  : V1.9, 14 February 2012
+   Author(s): Sandro Benigno
+   Coauthor(s):
+   Jani Hirvinen   (All the EEPROM routines)
+   Michael Oborne  (OSD Configutator)
+   Mike Smith      (BetterStream and Fast Serial libraries)
+   Special Contribuitor:
+   Andrew Tridgell by all the support on MAVLink
+   Doug Weibel by his great orientation since the start of this project
+   Contributors: James Goppert, Max Levine
+   and all other members of DIY Drones Dev team
+   Thanks to: Chris Anderson, Jordi Munoz
 
 
-This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
+   This program is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
 
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-GNU General Public License for more details.
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+   GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public License
-along with this program. If not, see <http://www.gnu.org/licenses/>
+   You should have received a copy of the GNU General Public License
+   along with this program. If not, see <http://www.gnu.org/licenses/>
 
-*/
+ */
 
 /* ************************************************************ */
 /* **************** MAIN PROGRAM - MODULES ******************** */
 /* ************************************************************ */
 
-#undef PROGMEM 
-#define PROGMEM __attribute__(( section(".progmem.data") )) 
+#undef PROGMEM
+#define PROGMEM __attribute__((section(".progmem.data")))
 
-#undef PSTR 
-#define PSTR(s) (__extension__({static prog_char __c[] PROGMEM = (s); &__c[0];})) 
+#undef PSTR
+#define PSTR(s) \
+    (__extension__({ static prog_char __c[] PROGMEM = (s); &__c[0]; } \
+                   ))
 
 
 /* **********************************************/
 /* ***************** INCLUDES *******************/
 
-//#define membug 
-//#define FORCEINIT  // You should never use this unless you know what you are doing 
+// #define membug
+// #define FORCEINIT  // You should never use this unless you know what you are doing
 
 
 // AVR Includes
@@ -95,34 +97,34 @@ along with this program. If not, see <http://www.gnu.org/licenses/>
 /* *************************************************/
 /* ***************** DEFINITIONS *******************/
 
-//OSD Hardware 
-//#define ArduCAM328
+// OSD Hardware
+// #define ArduCAM328
 #define MinimOSD
 
-#define TELEMETRY_SPEED  57600  // How fast our MAVLink telemetry is coming to Serial port
+#define TELEMETRY_SPEED 57600 // How fast our MAVLink telemetry is coming to Serial port
 
 #ifdef USE_WITH_MINRXOSD
-#define BOOTTIME         8000   // Time in milliseconds that we show boot loading bar and wait user input
+#define BOOTTIME        8000   // Time in milliseconds that we show boot loading bar and wait user input
 #else
-#define BOOTTIME         2000   // Time in milliseconds that we show boot loading bar and wait user input
+#define BOOTTIME        2000   // Time in milliseconds that we show boot loading bar and wait user input
 #endif
 
 // Objects and Serial definitions
 FastSerialPort0(Serial);
-OSD osd; //OSD object 
+OSD osd; // OSD object
 
-SimpleTimer  mavlinkTimer;
+SimpleTimer mavlinkTimer;
 
 
 /* **********************************************/
 /* ***************** SETUP() *******************/
 
-void setup() 
+void setup()
 {
 #ifdef ArduCAM328
     pinMode(10, OUTPUT); // USB ArduCam Only
 #endif
-    pinMode(MAX7456_SELECT,  OUTPUT); // OSD CS
+    pinMode(MAX7456_SELECT, OUTPUT); // OSD CS
 
     Serial.begin(TELEMETRY_SPEED);
     // setup mavlink port
@@ -132,19 +134,19 @@ void setup()
     Serial.println(freeMem());
 #endif
 
-    // Prepare OSD for displaying 
+    // Prepare OSD for displaying
     unplugSlaves();
     osd.init();
 
-    // Start 
+    // Start
     startPanels();
     delay(500);
 
     // OSD debug for development (Shown at start)
 #ifdef membug
-    osd.setPanel(1,1);
+    osd.setPanel(1, 1);
     osd.openPanel();
-    osd.printf("%i",freeMem()); 
+    osd.printf("%i", freeMem());
     osd.closePanel();
 #endif
 
@@ -157,10 +159,10 @@ void setup()
 #if 0
     // Check EEPROM to see if we have initialized it already or not
     // also checks if we have new version that needs EEPROM reset
-    if(readEEPROM(CHK1) + readEEPROM(CHK2) != VER) {
-        osd.setPanel(6,9);
+    if (readEEPROM(CHK1) + readEEPROM(CHK2) != VER) {
+        osd.setPanel(6, 9);
         osd.openPanel();
-        osd.printf_P(PSTR("Missing/Old Config")); 
+        osd.printf_P(PSTR("Missing/Old Config"));
         osd.closePanel();
         InitializeOSD();
     }
@@ -169,13 +171,15 @@ void setup()
 // JRChange: Flight Batt on MinimOSD:
     // Check EEPROM to see if we have initialized the battery values already
     if (readEEPROM(BATT_CHK) != BATT_VER) {
-	writeBattSettings();
+        writeBattSettings();
     }
 
     // Get correct panel settings from EEPROM
     readSettings();
-    for(panel = 0; panel < npanels; panel++) readPanelSettings();
-    panel = 0; //set panel to 0 to start in the first navigation screen
+    for (panel = 0; panel < npanels; panel++) {
+        readPanelSettings();
+    }
+    panel = 0; // set panel to 0 to start in the first navigation screen
     // Show bootloader bar
     loadBar();
 
@@ -197,15 +201,13 @@ void setup()
     delay(1000);
 #endif
 
-    // Startup MAVLink timers  
+    // Startup MAVLink timers
     mavlinkTimer.Set(&OnMavlinkTimer, 100);
 
     // House cleaning, clear display and enable timers
     osd.clear();
     mavlinkTimer.Enable();
-
 } // END of setup();
-
 
 
 /* ***********************************************/
@@ -213,63 +215,62 @@ void setup()
 
 // Mother of all happenings, The loop()
 // As simple as possible.
-void loop() 
+void loop()
 {
 // JRChange: OpenPilot UAVTalk:
 #ifdef PROTOCOL_UAVTALK
     if (uavtalk_read()) {
         OnMavlinkTimer();
     } else {
-	mavlinkTimer.Run();
+        mavlinkTimer.Run();
     }
 #else
-    if(enable_mav_request == 1){//Request rate control
+    if (enable_mav_request == 1) { // Request rate control
         osd.clear();
-        osd.setPanel(3,10);
+        osd.setPanel(3, 10);
         osd.openPanel();
-        osd.printf_P(PSTR("Requesting DataStreams...")); 
+        osd.printf_P(PSTR("Requesting DataStreams..."));
         osd.closePanel();
-        for(int n = 0; n < 3; n++){
-            request_mavlink_rates();//Three times to certify it will be readed
+        for (int n = 0; n < 3; n++) {
+            request_mavlink_rates(); // Three times to certify it will be readed
             delay(50);
         }
         enable_mav_request = 0;
         delay(2000);
         osd.clear();
-        waitingMAVBeats = 0;
-        lastMAVBeat = millis();//Preventing error from delay sensing
+        waitingMAVBeats    = 0;
+        lastMAVBeat = millis(); // Preventing error from delay sensing
     }
 
     read_mavlink();
 
     mavlinkTimer.Run();
-#endif
+#endif /* ifdef PROTOCOL_UAVTALK */
 }
 
 /* *********************************************** */
 /* ******** functions used in main loop() ******** */
-void OnMavlinkTimer()			// duration is up to approx. 10ms depending on choosen display features
+void OnMavlinkTimer() // duration is up to approx. 10ms depending on choosen display features
 {
+#ifdef GPS_SIMULATION // simple GPS data simulation
 
-#ifdef GPS_SIMULATION			// simple GPS data simulation
-
-#define LAT_STEPS	0.000009	// about 1m
-#define LON_STEPS	0.000014	// about 1m at latitude of 48.8582�
+#define LAT_STEPS 0.000009 // about 1m
+#define LON_STEPS 0.000014 // about 1m at latitude of 48.8582�
 
     if (!osd_got_home) {
-	osd_got_home = true;
-	osd_fix_type = 3;
-	osd_satellites_visible = 10;
-	osd_lat = 48.8582;		// see you in Paris ;-)
-	osd_lon =  2.2946;		// see you in Paris ;-)
-	osd_alt =  0.0;
-	osd_home_lat = osd_lat;
-	osd_home_lon = osd_lon;
-	osd_home_alt = osd_alt;
+        osd_got_home = true;
+        osd_fix_type = 3;
+        osd_satellites_visible = 10;
+        osd_lat = 48.8582; // see you in Paris ;-)
+        osd_lon = 2.2946; // see you in Paris ;-)
+        osd_alt = 0.0;
+        osd_home_lat = osd_lat;
+        osd_home_lon = osd_lon;
+        osd_home_alt = osd_alt;
     }
 
 #if 1 // cruising by stick inputs, quick and dirty and only for simulations
-#define P_OFFSET	100		// [us]	PWM offset for detecting stick movement
+#define P_OFFSET 100 // [us]	PWM offset for detecting stick movement
     static int16_t chan1_r_middle = 0;
     static int16_t chan2_r_middle = 0;
 
@@ -277,21 +278,27 @@ void OnMavlinkTimer()			// duration is up to approx. 10ms depending on choosen d
         chan1_r_middle = chan1_raw;
         chan2_r_middle = chan2_raw;
     }
-    
-    if (chan2_raw > chan2_r_middle + P_OFFSET)		osd_lat -= LAT_STEPS;
-    else if (chan2_raw < chan2_r_middle - P_OFFSET)	osd_lat += LAT_STEPS;
-    
-    if (chan1_raw > chan1_r_middle + P_OFFSET)		osd_lon += LON_STEPS;
-    else if (chan1_raw < chan1_r_middle - P_OFFSET)	osd_lon -= LON_STEPS;
-    
+
+    if (chan2_raw > chan2_r_middle + P_OFFSET) {
+        osd_lat -= LAT_STEPS;
+    } else if (chan2_raw < chan2_r_middle - P_OFFSET) {
+        osd_lat += LAT_STEPS;
+    }
+
+    if (chan1_raw > chan1_r_middle + P_OFFSET) {
+        osd_lon += LON_STEPS;
+    } else if (chan1_raw < chan1_r_middle - P_OFFSET) {
+        osd_lon -= LON_STEPS;
+    }
+
     osd_heading = 0.0;
-#else
+#else /* if 1 */
     osd_heading = osd_heading > 360.0 ? 0.0 : osd_heading + 0.5;
-    osd_lat -= LAT_STEPS;
-    osd_lon += LON_STEPS;
-#endif
-    osd_alt += 0.02;
-#endif
+    osd_lat    -= LAT_STEPS;
+    osd_lon    += LON_STEPS;
+#endif /* if 1 */
+    osd_alt    += 0.02;
+#endif /* ifdef GPS_SIMULATION */
 
 #ifdef FLIGHT_BATT_ON_MINIMOSD
     flight_batt_read();
@@ -299,14 +306,18 @@ void OnMavlinkTimer()			// duration is up to approx. 10ms depending on choosen d
 
 #ifdef PACKETRXOK_ON_MINIMOSD
     PacketRxOk_read();
-    rssi = (int16_t) osd_rssi;
+    rssi = (int16_t)osd_rssi;
 #endif
 
 #ifdef ANALOG_RSSI_ON_MINIMOSD
     analog_rssi_read();
-    rssi = (int16_t) osd_rssi;
-    if (!rssiraw_on) rssi = (int16_t)((float)(rssi - rssipersent)/(float)(rssical-rssipersent)*100.0f);
-    if (rssi < -99) rssi = -99;
+    rssi = (int16_t)osd_rssi;
+    if (!rssiraw_on) {
+        rssi = (int16_t)((float)(rssi - rssipersent) / (float)(rssical - rssipersent) * 100.0f);
+    }
+    if (rssi < -99) {
+        rssi = -99;
+    }
 #endif
 
 #ifdef RSSI_ON_REVO
@@ -314,21 +325,21 @@ void OnMavlinkTimer()			// duration is up to approx. 10ms depending on choosen d
 #endif /* RSSI_ON_REVO */
 
 #ifdef JR_SPECIALS
-    calculateCompassPoint();		// calculate the compass point which is shown in panHeading
+    calculateCompassPoint(); // calculate the compass point which is shown in panHeading
 #endif
 
-    updateTravelDistance();		// calculate travel distance
-    setHeadingPattern();		// generate the heading pattern
-    setHomeVars(osd);			// calculate and set Distance from home and Direction to home
-    writePanels();			// writing enabled panels (check OSD_Panels Tab)
+    updateTravelDistance(); // calculate travel distance
+    setHeadingPattern(); // generate the heading pattern
+    setHomeVars(osd); // calculate and set Distance from home and Direction to home
+    writePanels(); // writing enabled panels (check OSD_Panels Tab)
 }
 
 
-void unplugSlaves(){
-    //Unplug list of SPI
+void unplugSlaves()
+{
+    // Unplug list of SPI
 #ifdef ArduCAM328
-    digitalWrite(10,  HIGH); // unplug USB HOST: ArduCam Only
+    digitalWrite(10, HIGH); // unplug USB HOST: ArduCam Only
 #endif
-    digitalWrite(MAX7456_SELECT,  HIGH); // unplug OSD
+    digitalWrite(MAX7456_SELECT, HIGH); // unplug OSD
 }
-

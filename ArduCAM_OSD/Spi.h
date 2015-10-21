@@ -3,19 +3,18 @@
 
 // Get the common arduino functions
 #if defined(ARDUINO) && ARDUINO >= 100
-	#include "Arduino.h"
+        #include "Arduino.h"
 #else
-	#include "wiring.h"
+        #include "wiring.h"
 #endif
 
-#define SCK_PIN   13
-#define MISO_PIN  12
-#define MOSI_PIN  11
-#define SS_PIN    10  // <------- !!! (Remember! This pin will select USB host chip Max3421)
+#define SCK_PIN  13
+#define MISO_PIN 12
+#define MOSI_PIN 11
+#define SS_PIN   10  // <------- !!! (Remember! This pin will select USB host chip Max3421)
 
-class SPI
-{
-  public:
+class SPI {
+public:
     SPI(void);
     void mode(byte);
     byte transfer(byte);
@@ -24,5 +23,4 @@ class SPI
 
 extern SPI Spi;
 
-#endif
-
+#endif // ifndef Spi_h

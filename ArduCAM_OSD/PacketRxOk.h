@@ -4,7 +4,7 @@
  * @file       PacketRxOk.h
  * @author     Joerg-D. Rothfuchs
  * @brief      Implements packet receive ok detection and measurement
- * 	       on the Ardupilot Mega MinimOSD using INT1.
+ *             on the Ardupilot Mega MinimOSD using INT1.
  * @see        The GNU Public License (GPL) Version 3
  *
  *****************************************************************************/
@@ -20,7 +20,7 @@
  * for more details.
  *
  * You should have received a copy of the GNU General Public License along
- * with this program; if not, see <http://www.gnu.org/licenses/> or write to the 
+ * with this program; if not, see <http://www.gnu.org/licenses/> or write to the
  * Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
@@ -32,19 +32,18 @@
  * It uses the green LED on 2.4GHz RC-RX which blinks when packets are lost.
  * It works well with the LED behavior of the GigaScan RX.
  * The Futaba RX begins to blink too late, just before total loss.
-*/
+ */
 
 
 #ifndef PACKETRXOK_H_
 #define PACKETRXOK_H_
 
 
-#define PRO_PIN				3
-#define PRO_INT  			1
+#define PRO_PIN 3
+#define PRO_INT 1
 
 void PacketRxOk_init(void);
 void PacketRxOk_read(void);
 
 
 #endif /* PACKETRXOK_H_ */
-

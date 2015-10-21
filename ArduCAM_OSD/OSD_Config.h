@@ -30,8 +30,8 @@
 // Amedee: Analog RSSI on MinimOSD:
 // #define ANALOG_RSSI_ON_MINIMOSD
 
-// RSSI from Revo
-#define RSSI_ON_REVO
+// RSSI from Flight controller (Link quality)
+#define RSSI_ON_FC
 
 // JRChange: artificial horizon original version
 // #define AH_ORIGINAL_VERSION
@@ -77,7 +77,7 @@
 #define VERSION_ADDITIONAL_UAVOBJID
 
 // OpenPilot Revo add ons
-// #define REVO_ADD_ONS
+#define REVO_ADD_ONS
 
 #define MEASURE_PERIOD 95 // ms
 

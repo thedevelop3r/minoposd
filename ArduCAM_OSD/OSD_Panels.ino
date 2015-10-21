@@ -185,7 +185,11 @@ void writePanels()
                 panBatteryPercent(panBatteryPercent_XY[0][panel], panBatteryPercent_XY[1][panel]);
             }
             if (ISe(panel, TEMP_BIT)) {
+                if (osd_temp_mode == 1) {
+                panBaroTemp(panTemp_XY[0][panel], panTemp_XY[1][panel]);
+                } else {
                 panTxPID(panTemp_XY[0][panel], panTemp_XY[1][panel]);
+                }
             }
             if (ISb(panel, Time_BIT)) {
                 panTime(panTime_XY[0][panel], panTime_XY[1][panel]);
@@ -485,38 +489,52 @@ void panSetup()
             }
             break;
         case 2:
+            osd.printf_P(PSTR("tempdisp "));
+            if (osd_temp_mode) {
+                osd.printf_P(PSTR("baro temp"));
+                if (chan1_raw < chan1_raw_middle - PWM_OFFSET) {
+                    osd_temp_mode = 0;
+                }
+            } else {
+                osd.printf_P(PSTR("txpid values"));
+                if (chan1_raw > chan1_raw_middle + PWM_OFFSET) {
+                    osd_temp_mode = 1;
+                }
+            }
+            break;
+        case 3:
             osd.printf_P(PSTR("battery warning "));
             osd.printf("%3.1f%c", float(battv) / 10.0, 0x76, 0x20);
             battv = change_val(battv, battv_ADDR);
             break;
 #ifdef FLIGHT_BATT_ON_MINIMOSD
+        case 6:
+            delta /= 10;
         case 5:
             delta /= 10;
         case 4:
-            delta /= 10;
-        case 3:
             // volt_div_ratio
             osd.printf_P(PSTR("calibrate||measured volt: "));
             osd.printf("%c%5.2f%c", 0xE2, (float)osd_vbat_A, 0x8E);
             osd.printf("||volt div ratio:  %5i", volt_div_ratio);
             volt_div_ratio = change_int_val(volt_div_ratio, volt_div_ratio_ADDR, delta);
             break;
+        case 9:
+            delta /= 10;
         case 8:
             delta /= 10;
         case 7:
-            delta /= 10;
-        case 6:
             // curr_amp_offset
             osd.printf_P(PSTR("calibrate||measured amp:  "));
             osd.printf("%c%5.2f%c", 0xE2, osd_curr_A * .01, 0x8F);
             osd.printf("||amp offset:      %5i", curr_amp_offset);
             curr_amp_offset = change_int_val(curr_amp_offset, curr_amp_offset_ADDR, delta);
             break;
+        case 12:
+            delta /= 10;
         case 11:
             delta /= 10;
         case 10:
-            delta /= 10;
-        case 9:
             // curr_amp_per_volt
             osd.printf_P(PSTR("calibrate||measured amp:  "));
             osd.printf("%c%5.2f%c", 0xE2, osd_curr_A * .01, 0x8F);
@@ -787,12 +805,14 @@ void panRSSI(int first_col, int first_line)
     osd.openPanel();
     osd.printf("%c%3i%c", 0xE1, rssi, 0x25);
     osd.closePanel();
+/* Disable OPLM stats, Rssi already display Link quality in % 
 #ifdef REVO_ADD_ONS
-    osd.setPanel(first_col - 2, first_line - 1);
+    osd.setPanel(first_col, first_line + 1);
     osd.openPanel();
     osd.printf("%4i%c%3i%c", oplm_rssi, 0x8B, oplm_linkquality, 0x8C);
     osd.closePanel();
 #endif
+*/
 }
 
 
@@ -1052,15 +1072,33 @@ void panTxPID(int first_col, int first_line)
 {
     osd.setPanel(first_col, first_line);
     osd.openPanel();
-    osd.printf("%1.5f", (double)osd_txpid_cur[0]);
+    osd.printf("%c%1.5f%c", 0xED, (double)osd_txpid_cur[0], 0xF3);
     osd.closePanel();
     osd.setPanel(first_col, first_line + 1);
     osd.openPanel();
-    osd.printf("%1.5f", (double)osd_txpid_cur[1]);
+    osd.printf("%c%1.5f%c", 0xED, (double)osd_txpid_cur[1], 0xF3);
     osd.closePanel();
     osd.setPanel(first_col, first_line + 2);
     osd.openPanel();
-    osd.printf("%1.5f", (double)osd_txpid_cur[2]);
+    osd.printf("%c%1.5f%c", 0xED, (double)osd_txpid_cur[2], 0xF3);
+    osd.closePanel();
+}
+
+
+/******************************************************************/
+// Panel  : panBaroTemp
+// Needs  : X, Y locations
+// Output : baro temperature
+/******************************************************************/
+void panBaroTemp(int first_col, int first_line)
+{
+    osd.setPanel(first_col, first_line);
+    osd.openPanel();
+#ifdef REVO_ADD_ONS
+    osd.printf("%5.0f%c", (double)(revo_baro_temp * convert_length), 0xB0);
+#else
+    osd.printf("no temp");
+#endif
     osd.closePanel();
 }
 

@@ -545,6 +545,7 @@ int uavtalk_read(void)
             case BAROALTITUDE_OBJID:
             case BAROSENSOR_OBJID:
                 revo_baro_alt = (int16_t)uavtalk_get_float(&msg, BAROALTITUDE_OBJ_ALTITUDE);
+                revo_baro_temp = (int16_t)uavtalk_get_float(&msg,  BAROALTITUDE_OBJ_TEMPERATURE);
                 break;
             case OPLINKSTATUS_OBJID:
 #ifdef VERSION_ADDITIONAL_UAVOBJID

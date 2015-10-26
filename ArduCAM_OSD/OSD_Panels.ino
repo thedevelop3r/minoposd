@@ -30,6 +30,7 @@
 
 #define PWM_LO              1200    // [us]	PWM low value
 #define PWM_HI              1800    // [us]	PWM high value
+#define PWM_HI_VALID        3000    // [us]	PWM high value valid. Higher values occurs when Rx is not powered.
 #define PWM_OFFSET          100     // [us]	PWM offset for detecting stick movement
 
 #define SETUP_TIME          30000   // [ms]	time after boot while we can enter the setup menu
@@ -43,10 +44,15 @@
 
 #define WARN_FLASH_TIME     1000    // [ms]	time with which the warnings are flashing
 #define WARN_RECOVER_TIME   4000    // [ms]	time we stay in the first panel after last warning
+
 #ifdef JR_SPECIALS
+#define WARN_MAX            7       // number of implemented warnings
+#else
+#ifdef REVO_ADD_ONS
 #define WARN_MAX            6       // number of implemented warnings
 #else
 #define WARN_MAX            5       // number of implemented warnings
+#endif
 #endif
 
 #define MODE_SWITCH_TIME    2000    // [ms]	time for mode switching
@@ -276,7 +282,7 @@ void switchPanels()
         }
 
         if (switch_mode == 0) {
-            if (ch_raw > PWM_HI) {
+            if (ch_raw > PWM_HI && ch_raw < PWM_HI_VALID) {
                 if (millis() <= SETUP_TIME) {
                     setup_menu_active = true;
                 } else if (!setup_menu_active && !warning_active) {
@@ -403,8 +409,29 @@ void panWarn(int first_col, int first_line)
 /*			warning_string = "  rssi low  "; */
                     }
                     break;
+
+#ifdef REVO_ADD_ONS
+                case 6: // Mag status, only while disarmed and used (preflight check)
+                    if (osd_armed < 2 && osd_mag_status > 1) {
+                         switch (osd_mag_status) {
+                            case 2: 
+                                warning_type   = cycle;
+                                warning_string = "mag warning";
+                                break;
+                            case 3: 
+                                warning_type   = cycle;
+                                warning_string = "mag critical";
+                            break;
+                            case 4: 
+                                warning_type   = cycle;
+                                warning_string = " mag  error ";
+                            break;
+                         }
+                    }
+#endif
+
 #ifdef JR_SPECIALS
-                case 6: // FAILSAFE
+                case 7: // FAILSAFE
                     if (osd_chan8_raw > PWM_HI) {
                         warning_type   = cycle;
                         warning_string = "  failsafe  ";

@@ -566,7 +566,7 @@ int uavtalk_read(void)
                 osd_txpid_cur[2] = uavtalk_get_float(&msg, TXPIDSTATUS_OBJ_CURPID3);
                 break;
 
-#ifdef OP_DEBUG
+#ifdef REVO_ADD_ONS
             case SYSTEMALARMS_OBJID:
 #ifdef VERSION_ADDITIONAL_UAVOBJID
             case SYSTEMALARMS_OBJID_001:
@@ -574,13 +574,16 @@ int uavtalk_read(void)
             case SYSTEMALARMS_OBJID_003:
             case SYSTEMALARMS_OBJID_004:
             case SYSTEMALARMS_OBJID_005:
+            case SYSTEMALARMS_OBJID_006:
 #endif
-                op_alarm  = msg.Data[SYSTEMALARMS_ALARM_CPUOVERLOAD];
-// op_alarm += msg.Data[SYSTEMALARMS_ALARM_EVENTSYSTEM] * 0x10;
-                op_alarm += msg.Data[SYSTEMALARMS_ALARM_MANUALCONTROL] * 0x10;
-                if (op_alarm > 0x11) {
-                    show_prio_info = 1;
-                }
+                // op_alarm  = msg.Data[SYSTEMALARMS_ALARM_CPUOVERLOAD];
+                // op_alarm += msg.Data[SYSTEMALARMS_ALARM_EVENTSYSTEM] * 0x10;
+                // op_alarm += msg.Data[SYSTEMALARMS_ALARM_MANUALCONTROL] * 0x10;
+                // if (op_alarm > 0x11) {
+                //    show_prio_info = 1;
+                // }
+
+                osd_mag_status = uavtalk_get_int8(&msg, SYSTEMALARMS_ALARM_MAGNETOMETER);
                 break;
 #endif
 

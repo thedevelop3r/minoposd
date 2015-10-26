@@ -36,9 +36,9 @@
 #define SETUP_DEBOUNCE_TIME 500 // [ms]	time for RC-TX stick debouncing
 #define SETUP_LOWEST_MENU   1       // lowest shown setup menue item
 #ifndef FLIGHT_BATT_ON_MINIMOSD
-#define SETUP_HIGHEST_MENU  2       // highest shown setup menue item
+#define SETUP_HIGHEST_MENU  3       // highest shown setup menue item
 #else
-#define SETUP_HIGHEST_MENU  11      // highest shown setup menue item
+#define SETUP_HIGHEST_MENU  12      // highest shown setup menue item
 #endif
 
 #define WARN_FLASH_TIME     1000    // [ms]	time with which the warnings are flashing

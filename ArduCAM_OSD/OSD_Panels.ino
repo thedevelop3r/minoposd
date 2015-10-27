@@ -554,7 +554,7 @@ void panSetup()
         case 7:
             // curr_amp_offset
             osd.printf_P(PSTR("calibrate||measured amp:  "));
-            osd.printf("%c%5.2f%c", 0xE2, osd_curr_A * .01, 0x8F);
+            osd.printf("%c%5.2f%c", 0xE4, osd_curr_A * .01, 0x8F);
             osd.printf("||amp offset:      %5i", curr_amp_offset);
             curr_amp_offset = change_int_val(curr_amp_offset, curr_amp_offset_ADDR, delta);
             break;
@@ -565,7 +565,7 @@ void panSetup()
         case 10:
             // curr_amp_per_volt
             osd.printf_P(PSTR("calibrate||measured amp:  "));
-            osd.printf("%c%5.2f%c", 0xE2, osd_curr_A * .01, 0x8F);
+            osd.printf("%c%5.2f%c", 0xE4, osd_curr_A * .01, 0x8F);
             osd.printf("||amp per volt:    %5i", curr_amp_per_volt);
             curr_amp_per_volt = change_int_val(curr_amp_per_volt, curr_amp_per_volt_ADDR, delta);
             break;

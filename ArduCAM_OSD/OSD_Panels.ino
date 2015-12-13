@@ -143,11 +143,20 @@ void writePanels()
                 }
             }
 
-            // these GPS related panels are active if GPS was valid before and we have a sat fix
-            if (osd_got_home && osd_fix_type > 1) {
+#ifdef REVO_ADD_ONS
+            if (revo_got_home_alt) {
                 if (ISc(panel, Halt_BIT)) {
                     panHomeAlt(panHomeAlt_XY[0][panel], panHomeAlt_XY[1][panel]);
                 }
+            }
+#endif
+            // these GPS related panels are active if GPS was valid before and we have a sat fix
+            if (osd_got_home && osd_fix_type > 1) {
+#ifndef REVO_ADD_ONS
+                if (ISc(panel, Halt_BIT)) {
+                    panHomeAlt(panHomeAlt_XY[0][panel], panHomeAlt_XY[1][panel]);
+                }
+#endif
                 if (ISc(panel, Alt_BIT)) {
                     panAlt(panAlt_XY[0][panel], panAlt_XY[1][panel]);
                 }
@@ -707,14 +716,14 @@ void panHomeDir(int first_col, int first_line)
 /******************************************************************/
 // Panel  : panHomeAlt
 // Needs  : X, Y locations
-// Output : Hom altitude
+// Output : Home altitude
 /******************************************************************/
 void panHomeAlt(int first_col, int first_line)
 {
     osd.setPanel(first_col, first_line);
     osd.openPanel();
 #ifdef REVO_ADD_ONS
-    osd.printf("%c%5.0f%c", 0xE7, (double)(revo_baro_alt * convert_length), unit_length);
+    osd.printf("%c%5.0f%c", 0xE7, (double)((revo_baro_alt - revo_home_baro_alt) * convert_length), unit_length);
 #else
     osd.printf("%c%5.0f%c", 0xE7, (double)((osd_alt - osd_home_alt) * convert_length), unit_length);
 #endif

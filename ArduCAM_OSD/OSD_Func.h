@@ -125,11 +125,33 @@ void setHomeVars(OSD &osd)
                 if (++osd_alt_cnt >= 30) {
                     osd_home_lat = osd_lat; // take this osd_lat as osd_home_lat
                     osd_home_lon = osd_lon; // take this osd_lon as osd_home_lon
+
+#ifdef REVO_ADD_ONS
+                    revo_home_baro_alt   = revo_baro_alt; // Use positionState altitude (mix GPS/baro altitude), set home altitude.
+                                                          // When osd_got_home, altitude display is zeroed.
+#else
                     osd_home_alt = osd_alt; // take this stable osd_alt as osd_home_alt
+#endif // ifdef REVO_ADD_ONS
+
                     osd_got_home = 1;
                 }
             }
         }
+#ifdef REVO_ADD_ONS
+        // Vehicle do not use GPS, set home altitude based on baro sensor
+        if ((revo_got_home_alt == 0) && (osd_lat == 0) && (osd_lon == 0)) {
+            // reuse previous vars
+            if (fabs(osd_alt_prev - revo_baro_alt) > 0.5) {
+                osd_alt_cnt  = 0;
+                osd_alt_prev = revo_baro_alt;
+            } else {
+                if (++osd_alt_cnt >= 30) {
+                    revo_home_baro_alt   = revo_baro_alt; // Use baro sensor altitude, set home altitude.
+                    revo_got_home_alt = 1;
+                }
+            }
+        }
+#endif // ifdef REVO_ADD_ONS
     }
 #else // ifdef PROTOCOL_UAVTALK
     float dstlon, dstlat;

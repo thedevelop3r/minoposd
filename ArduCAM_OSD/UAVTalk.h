@@ -211,6 +211,12 @@
 #define BAROALTITUDE_OBJ_TEMPERATURE         4
 #define BAROALTITUDE_OBJ_PRESSURE            8
 
+#define POSITIONSTATE_OBJID                  0x4AFDB658      // VERSION_RELEASE_LP15_09
+
+#define POSITIONSTATE_OBJ_NORTH              0
+#define POSITIONSTATE_OBJ_EAST               4
+#define POSITIONSTATE_OBJ_DOWN               8               
+
 
 #define OPLINKSTATUS_OBJID                   0x669C55E2
 #define OPLINKSTATUS_OBJID_001               0xBE2584BA      // different ID for VERSION_RELEASE_14_01_1 and VERSION_RELEASE_14_06_1 and VERSION_RELEASE_14_10_1 and VERSION_RELEASE_15_01_1

@@ -544,9 +544,16 @@ int uavtalk_read(void)
 #ifdef REVO_ADD_ONS
             case BAROALTITUDE_OBJID:
             case BAROSENSOR_OBJID:
-                revo_baro_alt = (int16_t)uavtalk_get_float(&msg, BAROALTITUDE_OBJ_ALTITUDE);
+                //revo_baro_alt = (int16_t)uavtalk_get_float(&msg, BAROALTITUDE_OBJ_ALTITUDE);
                 revo_baro_temp = (int16_t)uavtalk_get_float(&msg,  BAROALTITUDE_OBJ_TEMPERATURE);
                 break;
+
+            case POSITIONSTATE_OBJID:
+                // We prefer this altitude from positionstate because filtered (same value displayed in PFD)
+                // Become automatically to baro altitude if GPS not used
+                revo_baro_alt = -(int16_t)uavtalk_get_float(&msg,  POSITIONSTATE_OBJ_DOWN);
+                break;
+
             case OPLINKSTATUS_OBJID:
 #ifdef VERSION_ADDITIONAL_UAVOBJID
             case OPLINKSTATUS_OBJID_001:

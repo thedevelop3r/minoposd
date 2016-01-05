@@ -144,10 +144,9 @@ void writePanels()
             }
 
 #ifdef REVO_ADD_ONS
-            if (revo_got_home_alt) {
-                if (ISc(panel, Halt_BIT)) {
+            // Always active Home altitude from PositionState.down
+            if (ISc(panel, Halt_BIT)) {
                     panHomeAlt(panHomeAlt_XY[0][panel], panHomeAlt_XY[1][panel]);
-                }
             }
 #endif
             // these GPS related panels are active if GPS was valid before and we have a sat fix
@@ -625,6 +624,9 @@ void panLogo()
 #ifdef ANALOG_RSSI_ON_MINIMOSD
     osd.printf_P(PSTR(" arssi"));
 #endif
+#ifdef REVO_ADD_ONS
+    osd.printf_P(PSTR(" revo"));
+#endif
 #ifdef JR_SPECIALS
     osd.printf_P(PSTR(" jrs"));
 #endif
@@ -723,7 +725,7 @@ void panHomeAlt(int first_col, int first_line)
     osd.setPanel(first_col, first_line);
     osd.openPanel();
 #ifdef REVO_ADD_ONS
-    osd.printf("%c%5.0f%c", 0xE7, (double)((revo_baro_alt - revo_home_baro_alt) * convert_length), unit_length);
+    osd.printf("%c%5.0f%c", 0xE7, (double)(revo_baro_alt * convert_length), unit_length);
 #else
     osd.printf("%c%5.0f%c", 0xE7, (double)((osd_alt - osd_home_alt) * convert_length), unit_length);
 #endif

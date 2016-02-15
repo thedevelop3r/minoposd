@@ -148,6 +148,10 @@ void writePanels()
             if (ISc(panel, Halt_BIT)) {
                     panHomeAlt(panHomeAlt_XY[0][panel], panHomeAlt_XY[1][panel]);
             }
+            // Always active Climb velocity from VelocityState.down
+            if (ISd(panel, Climb_BIT)) {
+                    panClimb(panClimb_XY[0][panel], panClimb_XY[1][panel]);
+            }
 #endif
             // these GPS related panels are active if GPS was valid before and we have a sat fix
             if (osd_got_home && osd_fix_type > 1) {
@@ -155,16 +159,20 @@ void writePanels()
                 if (ISc(panel, Halt_BIT)) {
                     panHomeAlt(panHomeAlt_XY[0][panel], panHomeAlt_XY[1][panel]);
                 }
+                if (ISd(panel, Climb_BIT)) {
+                    panClimb(panClimb_XY[0][panel], panClimb_XY[1][panel]);
+                }
+#else
+                // Allow travel distance display for Revo
+                if (ISe(panel,DIST_BIT)) {
+                    panDistance(panDistance_XY[0][panel], panDistance_XY[1][panel]);
+                }
 #endif
                 if (ISc(panel, Alt_BIT)) {
                     panAlt(panAlt_XY[0][panel], panAlt_XY[1][panel]);
                 }
                 if (ISc(panel, Vel_BIT)) {
                     panVel(panVel_XY[0][panel], panVel_XY[1][panel]);
-                }
-// if (ISe(panel,DIST_BIT))	panDistance(panDistance_XY[0][panel], panDistance_XY[1][panel]);
-                if (ISd(panel, Climb_BIT)) {
-                    panClimb(panClimb_XY[0][panel], panClimb_XY[1][panel]);
                 }
                 if (ISb(panel, Head_BIT)) {
                     panHeading(panHeading_XY[0][panel], panHeading_XY[1][panel]);

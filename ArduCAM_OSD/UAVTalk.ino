@@ -528,10 +528,19 @@ int uavtalk_read(void)
                 osd_time_minute = uavtalk_get_int8(&msg, GPSTIME_OBJ_MINUTE);
                 break;
 #endif
+
+#ifndef REVO_ADD_ONS
             case GPSVELOCITY_OBJID:
             case GPSVELOCITYSENSOR_OBJID:
                 osd_climb = -1.0 * uavtalk_get_float(&msg, GPSVELOCITY_OBJ_DOWN);
                 break;
+#else
+            case VELOCITYSTATE_OBJID:
+                // This allow vertical velocity data without GPS connected (Revo only)
+                osd_climb = -1.0 * uavtalk_get_float(&msg, VELOCITYSTATE_OBJ_DOWN);
+                break;
+#endif /* REVO_ADD_ONS */
+
 #ifdef FLIGHT_BATT_ON_REVO
             case FLIGHTBATTERYSTATE_OBJID:
             case FLIGHTBATTERYSTATE_OBJID_001:

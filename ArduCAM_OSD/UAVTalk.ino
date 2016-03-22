@@ -476,6 +476,7 @@ int uavtalk_read(void)
             case FLIGHTSTATUS_OBJID_005:
             case FLIGHTSTATUS_OBJID_006:
             case FLIGHTSTATUS_OBJID_007:
+            case FLIGHTSTATUS_OBJID_008:
 #endif
                 osd_armed = uavtalk_get_int8(&msg, FLIGHTSTATUS_OBJ_ARMED);
                 osd_mode  = uavtalk_get_int8(&msg, FLIGHTSTATUS_OBJ_FLIGHTMODE);
@@ -512,6 +513,7 @@ int uavtalk_read(void)
             case GPSPOSITIONSENSOR_OBJID:
             case GPSPOSITIONSENSOR_OBJID_001:
             case GPSPOSITIONSENSOR_OBJID_002:
+            case GPSPOSITIONSENSOR_OBJID_003:
                 osd_lat         = uavtalk_get_int32(&msg, GPSPOSITION_OBJ_LAT) / 10000000.0;
                 osd_lon         = uavtalk_get_int32(&msg, GPSPOSITION_OBJ_LON) / 10000000.0;
                 osd_satellites_visible = uavtalk_get_int8(&msg, GPSPOSITION_OBJ_SATELLITES);

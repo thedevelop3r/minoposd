@@ -45,7 +45,7 @@
 // generate release and copy exe to <top>\ground\uavobjgenerator
 // uavobjgenerator -flight ..\..\shared\uavobjectdefinition ..\..\
 // //
-#if defined VERSION_RELEASE_12_10_1 || defined VERSION_RELEASE_12_10_2 || defined VERSION_RELEASE_13_06_1 || defined VERSION_RELEASE_13_06_2 || defined VERSION_RELEASE_14_01_1 || defined VERSION_RELEASE_14_06_1 || defined VERSION_RELEASE_14_10_1 || defined VERSION_RELEASE_15_01_1 || defined VERSION_RELEASE_15_02_1 || defined VERSION_RELEASE_15_05 || defined VERSION_RELEASE_LP15_09
+#if defined VERSION_RELEASE_12_10_1 || defined VERSION_RELEASE_12_10_2 || defined VERSION_RELEASE_13_06_1 || defined VERSION_RELEASE_13_06_2 || defined VERSION_RELEASE_14_01_1 || defined VERSION_RELEASE_14_06_1 || defined VERSION_RELEASE_14_10_1 || defined VERSION_RELEASE_15_01_1 || defined VERSION_RELEASE_15_02_1 || defined VERSION_RELEASE_15_05 || defined VERSION_RELEASE_LP15_09 || defined VERSION_RELEASE_LP16_04
 
 #define FLIGHTTELEMETRYSTATS_OBJID          0x2F7E2902
 
@@ -60,6 +60,7 @@
 
 #define GPSPOSITION_OBJID                   0xE2A323B6
 #define GPSPOSITIONSENSOR_OBJID             0x1A5748CE      // new name since VERSION_RELEASE_14_01_1
+
 
 #define GPSTIME_OBJID                       0xD4478084
 
@@ -153,7 +154,7 @@
 
 #endif // defined VERSION_RELEASE_12_10_1 || defined VERSION_RELEASE_12_10_2 || defined VERSION_RELEASE_13_06_1 || defined VERSION_RELEASE_13_06_2 || defined VERSION_RELEASE_14_01_1
 
-#endif // defined VERSION_RELEASE_12_10_1 || defined VERSION_RELEASE_12_10_2 || defined VERSION_RELEASE_13_06_1 || defined VERSION_RELEASE_13_06_2 || defined VERSION_RELEASE_14_01_1 || defined VERSION_RELEASE_14_06_1 || defined VERSION_RELEASE_14_10_1 || defined VERSION_RELEASE_15_01_1 || defined VERSION_RELEASE_15_02_1 || defined VERSION_RELEASE_15_05 || defined VERSION_RELEASE_LP15_09
+#endif // defined VERSION_RELEASE_12_10_1 || defined VERSION_RELEASE_12_10_2 || defined VERSION_RELEASE_13_06_1 || defined VERSION_RELEASE_13_06_2 || defined VERSION_RELEASE_14_01_1 || defined VERSION_RELEASE_14_06_1 || defined VERSION_RELEASE_14_10_1 || defined VERSION_RELEASE_15_01_1 || defined VERSION_RELEASE_15_02_1 || defined VERSION_RELEASE_15_05 || defined VERSION_RELEASE_LP15_09 || defined VERSION_RELEASE_LP16_04
 
 
 #if defined VERSION_ADDITIONAL_UAVOBJID
@@ -165,6 +166,7 @@
 #define FLIGHTSTATUS_OBJID_005         0x8A80EA52      // different ID for VERSION_RELEASE_15_01_1 and VERSION_RELEASE_15_02_1
 #define FLIGHTSTATUS_OBJID_006         0x14ECA392      // different ID for git commit "OP-1760 autotakeoff"
 #define FLIGHTSTATUS_OBJID_007         0xE33E5D4E      // VERSION_RELEASE_15_05 and VERSION_RELEASE_LP15_09
+#define FLIGHTSTATUS_OBJID_008         0x6E3BDB60      // different ID for VERSION_RELEASE_LP16_04 (ASWA status added)
 
 #define SYSTEMALARMS_OBJID_001         0x09C7CBFE      // different ID for unreleased next version
 #define SYSTEMALARMS_OBJID_002         0x1D70DB44      // different ID for unreleased next version and VERSION_RELEASE_13_06_1
@@ -183,6 +185,7 @@
 
 #define GPSPOSITIONSENSOR_OBJID_001    0x7D26A6E6      // different ID for VERSION_RELEASE_14_10_1 and VERSION_RELEASE_15_01_1 and VERSION_RELEASE_15_02_1
 #define GPSPOSITIONSENSOR_OBJID_002    0x98A7858C      // different ID for VERSION_RELEASE_15_05 and VERSION_RELEASE_LP15_09
+#define GPSPOSITIONSENSOR_OBJID_003    0x9DF1F67A      // different ID for VERSION_RELEASE_LP16_04 (new GPS support)
 #endif // VERSION_ADDITIONAL_UAVOBJID
 
 

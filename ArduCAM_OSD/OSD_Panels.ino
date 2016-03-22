@@ -1019,7 +1019,7 @@ void panFlightMode(int first_col, int first_line)
         mode_str = "ac "; // AUTOCRUISE
     }
 #endif // if defined VERSION_RELEASE_15_01_1 || defined VERSION_RELEASE_15_02_1
-#if defined VERSION_RELEASE_15_05 || defined VERSION_RELEASE_LP15_09
+#if defined VERSION_RELEASE_15_05 || defined VERSION_RELEASE_LP15_09 || defined VERSION_RELEASE_LP16_04
     if (osd_mode == 0) {
         mode_str = "man"; // MANUAL
     } else if (osd_mode == 1) {
@@ -1057,7 +1057,7 @@ void panFlightMode(int first_col, int first_line)
     } else if (osd_mode == 17) {
         mode_str = "at "; // AUTOTAKEOFF
     }
-#endif // if defined VERSION_RELEASE_15_05 || defined VERSION_RELEASE_LP15_09
+#endif // if defined VERSION_RELEASE_15_05 || defined VERSION_RELEASE_LP15_09 || defined VERSION_RELEASE_LP16_04
     osd.printf("%c%s", 0xE0, mode_str);
     osd.closePanel();
 }

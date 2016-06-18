@@ -83,6 +83,8 @@ byte panC_REG[npanels] = { 0b00000000 };
 byte panD_REG[npanels] = { 0b00000000 };
 byte panE_REG[npanels] = { 0b00000000 };
 
+//Call sign variables
+static char char_call[OSD_CALL_SIGN_TOTAL+1] = {0};
 
 // First 8 panels and their X,Y coordinate holders
 byte panCenter_XY[2][npanels];
@@ -124,6 +126,7 @@ byte panWarn_XY[2][npanels];
 byte panWindSpeed_XY[2][npanels];
 byte panClimb_XY[2][npanels];
 byte panTune_XY[2][npanels];
+byte panCALLSIGN_XY[2][npanels];
 // byte panSetup_XY[2];
 byte panRSSI_XY[2][npanels];
 byte panDistance_XY[2][npanels];

@@ -119,107 +119,53 @@ void writePanels()
     if (setup_menu_active) {
         panSetup();
     } else {
-        if (ISd(0, Warn_BIT)) {
-            panWarn(panWarn_XY[0][0], panWarn_XY[1][0]); // ever check/display warnings
-        }
+        if (ISd(0, Warn_BIT)) panWarn(panWarn_XY[0][0], panWarn_XY[1][0]); // ever check/display warnings
         if (panel < npanels) { // first or second panel
             // these GPS related panels are active under all circumstances
-            if (ISa(panel, GPSats_BIT)) {
-                panGPSats(panGPSats_XY[0][panel], panGPSats_XY[1][panel]); // number of visible sats
-            }
-            if (ISa(panel, GPL_BIT)) {
-                panGPL(panGPL_XY[0][panel], panGPL_XY[1][panel]); // sat fix type
-            }
+            if (ISa(panel, GPSats_BIT)) panGPSats(panGPSats_XY[0][panel], panGPSats_XY[1][panel]); // number of visible sats
+            if (ISa(panel, GPL_BIT)) panGPL(panGPL_XY[0][panel], panGPL_XY[1][panel]); // sat fix type
             // these GPS related panels are active if GPS was valid before
             if (osd_got_home) {
-                if (ISa(panel, GPS_BIT)) {
-                    panGPS(panGPS_XY[0][panel], panGPS_XY[1][panel]); // lat & lon
-                }
-                if (ISb(panel, HDis_BIT)) {
-                    panHomeDis(panHomeDis_XY[0][panel], panHomeDis_XY[1][panel]);
-                }
-                if (ISb(panel, HDir_BIT)) {
-                    panHomeDir(panHomeDir_XY[0][panel], panHomeDir_XY[1][panel]);
-                }
+                if (ISa(panel, GPS_BIT)) panGPS(panGPS_XY[0][panel], panGPS_XY[1][panel]); // lat & lon
+                if (ISb(panel, HDis_BIT)) panHomeDis(panHomeDis_XY[0][panel], panHomeDis_XY[1][panel]);
+                if (ISb(panel, HDir_BIT)) panHomeDir(panHomeDir_XY[0][panel], panHomeDir_XY[1][panel]);
             }
 
 #ifdef REVO_ADD_ONS
             // Always active Home altitude from PositionState.down
-            if (ISc(panel, Halt_BIT)) {
-                    panHomeAlt(panHomeAlt_XY[0][panel], panHomeAlt_XY[1][panel]);
-            }
+            if (ISc(panel, Halt_BIT)) panHomeAlt(panHomeAlt_XY[0][panel], panHomeAlt_XY[1][panel]);
             // Always active Climb velocity from VelocityState.down
-            if (ISd(panel, Climb_BIT)) {
-                    panClimb(panClimb_XY[0][panel], panClimb_XY[1][panel]);
-            }
+            if (ISd(panel, Climb_BIT)) panClimb(panClimb_XY[0][panel], panClimb_XY[1][panel]);
 #endif
             // these GPS related panels are active if GPS was valid before and we have a sat fix
             if (osd_got_home && osd_fix_type > 1) {
 #ifndef REVO_ADD_ONS
-                if (ISc(panel, Halt_BIT)) {
-                    panHomeAlt(panHomeAlt_XY[0][panel], panHomeAlt_XY[1][panel]);
-                }
-                if (ISd(panel, Climb_BIT)) {
-                    panClimb(panClimb_XY[0][panel], panClimb_XY[1][panel]);
-                }
+                if (ISc(panel, Halt_BIT)) panHomeAlt(panHomeAlt_XY[0][panel], panHomeAlt_XY[1][panel]);
+                if (ISd(panel, Climb_BIT)) panClimb(panClimb_XY[0][panel], panClimb_XY[1][panel]);
 #else
                 // Allow travel distance display for Revo
-                if (ISe(panel,DIST_BIT)) {
-                    panDistance(panDistance_XY[0][panel], panDistance_XY[1][panel]);
-                }
+                if (ISe(panel,DIST_BIT)) panDistance(panDistance_XY[0][panel], panDistance_XY[1][panel]);
 #endif
-                if (ISc(panel, Alt_BIT)) {
-                    panAlt(panAlt_XY[0][panel], panAlt_XY[1][panel]);
-                }
-                if (ISc(panel, Vel_BIT)) {
-                    panVel(panVel_XY[0][panel], panVel_XY[1][panel]);
-                }
-                if (ISb(panel, Head_BIT)) {
-                    panHeading(panHeading_XY[0][panel], panHeading_XY[1][panel]);
-                }
-                if (ISb(panel, Rose_BIT)) {
-                    panRose(panRose_XY[0][panel], panRose_XY[1][panel]);
-                }
+                if (ISc(panel, Alt_BIT)) panAlt(panAlt_XY[0][panel], panAlt_XY[1][panel]);
+                if (ISc(panel, Vel_BIT)) panVel(panVel_XY[0][panel], panVel_XY[1][panel]);
+                if (ISb(panel, Head_BIT)) panHeading(panHeading_XY[0][panel], panHeading_XY[1][panel]);
+                if (ISb(panel, Rose_BIT)) panRose(panRose_XY[0][panel], panRose_XY[1][panel]);
             }
 
-            if (ISd(panel, RSSI_BIT)) {
-                panRSSI(panRSSI_XY[0][panel], panRSSI_XY[1][panel]);
-            }
-            if (ISa(panel, Rol_BIT)) {
-                panRoll(panRoll_XY[0][panel], panRoll_XY[1][panel]);
-            }
-            if (ISa(panel, Pit_BIT)) {
-                panPitch(panPitch_XY[0][panel], panPitch_XY[1][panel]);
-            }
-            if (ISc(panel, Thr_BIT)) {
-                panThr(panThr_XY[0][panel], panThr_XY[1][panel]);
-            }
-            if (ISc(panel, FMod_BIT)) {
-                panFlightMode(panFMod_XY[0][panel], panFMod_XY[1][panel]);
-            }
-            if (ISa(panel, BatA_BIT)) {
-                panBatt_A(panBatt_A_XY[0][panel], panBatt_A_XY[1][panel]);
-            }
-            if (ISc(panel, CurA_BIT)) {
-                panCur_A(panCur_A_XY[0][panel], panCur_A_XY[1][panel]);
-            }
-            if (ISa(panel, Bp_BIT)) {
-                panBatteryPercent(panBatteryPercent_XY[0][panel], panBatteryPercent_XY[1][panel]);
-            }
-            if (ISe(panel, TEMP_BIT)) {
-                if (osd_temp_mode == 1) {
-                panBaroTemp(panTemp_XY[0][panel], panTemp_XY[1][panel]);
-                } else {
-                panTxPID(panTemp_XY[0][panel], panTemp_XY[1][panel]);
-                }
-            }
-            if (ISb(panel, Time_BIT)) {
-                panTime(panTime_XY[0][panel], panTime_XY[1][panel]);
-            }
-
-            if (ISc(panel, Hor_BIT)) {
-                panHorizon(panHorizon_XY[0][panel], panHorizon_XY[1][panel]);
-            }
+            if (ISd(panel, RSSI_BIT)) panRSSI(panRSSI_XY[0][panel], panRSSI_XY[1][panel]);
+            if(ISd(panel,CALLSIGN_BIT)) panCALLSIGN(panCALLSIGN_XY[0][panel], panCALLSIGN_XY[1][panel]);
+            if (ISa(panel, Rol_BIT)) panRoll(panRoll_XY[0][panel], panRoll_XY[1][panel]);
+            if (ISa(panel, Pit_BIT)) panPitch(panPitch_XY[0][panel], panPitch_XY[1][panel]);
+            if (ISc(panel, Thr_BIT)) panThr(panThr_XY[0][panel], panThr_XY[1][panel]);
+            if (ISc(panel, FMod_BIT)) panFlightMode(panFMod_XY[0][panel], panFMod_XY[1][panel]);
+            if (ISa(panel, BatA_BIT)) panBatt_A(panBatt_A_XY[0][panel], panBatt_A_XY[1][panel]);
+            if (ISc(panel, CurA_BIT)) panCur_A(panCur_A_XY[0][panel], panCur_A_XY[1][panel]);
+            if (ISa(panel, Bp_BIT)) panBatteryPercent(panBatteryPercent_XY[0][panel], panBatteryPercent_XY[1][panel]);
+            if (ISe(panel, TEMP_BIT))
+                if (osd_temp_mode == 1) panBaroTemp(panTemp_XY[0][panel], panTemp_XY[1][panel]);
+                else panTxPID(panTemp_XY[0][panel], panTemp_XY[1][panel]);
+            if (ISb(panel, Time_BIT)) panTime(panTime_XY[0][panel], panTime_XY[1][panel]);
+            if (ISc(panel, Hor_BIT)) panHorizon(panHorizon_XY[0][panel], panHorizon_XY[1][panel]);
 #ifdef SHOW_RADAR
             // these GPS related panels are active if GPS was valid before
             if (osd_got_home) {
@@ -860,6 +806,20 @@ void panRSSI(int first_col, int first_line)
     osd.closePanel();
 #endif
 */
+}
+
+/* **************************************************************** */
+// Panel  : panCALLSIGN
+// Needs  : X, Y locations
+// Output : Call sign identification
+// Size   : 1 x 6Hea  (rows x chars)
+// Staus  : done
+
+void panCALLSIGN(int first_col, int first_line){
+    osd.setPanel(first_col, first_line);
+    osd.openPanel();
+    osd.printf("%s", char_call); 
+    osd.closePanel();
 }
 
 

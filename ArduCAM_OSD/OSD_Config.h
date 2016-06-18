@@ -16,13 +16,13 @@
 #define PROTOCOL_UAVTALK
 
 // JRChange: Flight Batt on MinimOSD:
-// #define FLIGHT_BATT_ON_MINIMOSD
+#define FLIGHT_BATT_ON_MINIMOSD
 
 // Add MicroOSD KV team mod
 // #define MICRO_OSD_KVTEAM
 
 // JRChange: Flight Batt on Revo:
-#define FLIGHT_BATT_ON_REVO
+//#define FLIGHT_BATT_ON_REVO
 
 // JRChange: PacketRxOk on MinimOSD:
 // #define PACKETRXOK_ON_MINIMOSD
@@ -31,21 +31,21 @@
 // #define ANALOG_RSSI_ON_MINIMOSD
 
 // RSSI from Flight controller (Link quality)
-#define RSSI_ON_FC
+//#define RSSI_ON_FC
 
 // JRChange: artificial horizon original version
 // #define AH_ORIGINAL_VERSION
 
 // JRChange: artificial horizon refactored version
-// #define AH_REFACTORED_VERSION
+#define AH_REFACTORED_VERSION
 
 // JRChange: artificial horizon zero centered
 // #define AH_ZERO_CENTERED
 
 // JRChange: artificial horizon with better resolution
-#define AH_BETTER_RESOLUTION
+//#define AH_BETTER_RESOLUTION
 
-// JRChange: show_radar
+// JRChange: show_
 // #define SHOW_RADAR
 
 // JRChange: JR specials

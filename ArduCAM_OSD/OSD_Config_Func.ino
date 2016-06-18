@@ -209,6 +209,15 @@ void readSettings()
     batt_warn_level   = EEPROM.read(OSD_BATT_WARN_ADDR);
     rssi_warn_level   = EEPROM.read(OSD_RSSI_WARN_ADDR);
 
+    int i;
+    for(i=0;i < OSD_CALL_SIGN_TOTAL;i++) 
+    {
+        char_call[i] = EEPROM.read(OSD_CALL_SIGN_ADDR + i);
+        if(char_call[i] == 0) break;
+    }
+    char_call[i+1] ='\0'; //null terminate the string 
+
+
 // JRChange: Flight Batt on MinimOSD:
     volt_div_ratio    = EEPROM.read(volt_div_ratio_ADDR) + (EEPROM.read(volt_div_ratio_ADDR + 1) << 8);
     curr_amp_per_volt = EEPROM.read(curr_amp_per_volt_ADDR) + (EEPROM.read(curr_amp_per_volt_ADDR + 1) << 8);
@@ -360,6 +369,10 @@ void readPanelSettings()
     setBit(panD_REG[panel], RSSI_BIT, readEEPROM(panRSSI_en_ADDR + offset));
     panRSSI_XY[0][panel]     = readEEPROM(panRSSI_x_ADDR + offset);
     panRSSI_XY[1][panel]     = checkPAL(readEEPROM(panRSSI_y_ADDR + offset));
+
+    setBit(panD_REG[panel], CALLSIGN_BIT, readEEPROM(panCALLSIGN_en_ADDR + offset));
+    panCALLSIGN_XY[0][panel] = readEEPROM(panCALLSIGN_x_ADDR + offset);
+    panCALLSIGN_XY[1][panel] = checkPAL(readEEPROM(panCALLSIGN_y_ADDR + offset));
 
     setBit(panE_REG[panel], DIST_BIT, readEEPROM(panDistance_en_ADDR + offset));
     panDistance_XY[0][panel] = readEEPROM(panDistance_x_ADDR + offset);
